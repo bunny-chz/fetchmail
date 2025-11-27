@@ -122,6 +122,10 @@ a001 ID ("name" "fetchmail" "version" "6.4.39" "vendor" "OpenWRT")
 
 ## Makefile
 
+fetchmail源码地址
+
+https://sourceforge.net/projects/fetchmail/
+
 注意：
 
 该文件fetchmail的源码版本是停止维护了的，由于我的OpenWRT版本是2102的，openssl版本不适合最新的fetchmail，会导致编译报错。
