@@ -128,3 +128,33 @@ a001 ID ("name" "fetchmail" "version" "6.4.39" "vendor" "OpenWRT")
 
 虽不是最新的fetchmail版本，但基本邮件功能可用。
 
+
+# 处理接收的邮件信息
+
+OpenWRT有专门的处理软件mblaze。组件路径，打开
+
+```
+Mail  --->
+    mblaze... Unix utilities to deal with Maildir
+```
+
+通过文件 `files/fetchmail_deliver.sh` 处理后，处理邮件时，建议移动到`extract`目录一封一封地处理。
+
+使用以下命令行，需要注意的是，`命令行工具是对整个目录所以文件遍历操作的`。
+
+```
+# 提取发件人From
+maddr -a from /tmp/maildir/extract/ 2>/dev/null | head -n 1
+
+# 提取收件人To
+maddr -a from /tmp/maildir/extract/ 2>/dev/null | sed -n '2p'
+
+# 提取主题Subject
+mhdr -h subject /tmp/maildir/extract/ 2>/dev/null
+mhdr -h subject /tmp/maildir/extract/
+
+# 提取中文Body (text/plain)
+mshow -O /tmp/maildir/extract/ 2
+```
+
+
