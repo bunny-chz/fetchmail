@@ -1,0 +1,40 @@
+Index: fetchmail-6.4.39/imap.c
+===================================================================
+--- fetchmail-6.4.39.orig/imap.c
++++ fetchmail-6.4.39/imap.c
+@@ -993,6 +993,35 @@ static int imap_getrange(int sock,
+     else
+     {
+ 	oldcount = count = 0;
++
++	 /* Send IMAP ID command for NetEase (163/126/yeah.net) mailboxes
++	 * to satisfy their "Unsafe Login" security policy.
++	 * Refer: https://www.ietf.org/rfc/rfc2971.txt    https://help.mail.163.com/faqDetail.do?code=d7a5dc8471cd0c0e8b4b8f4f8e49998b374173cfe9171305fa1ce630d7f67ac2eda07326646e6eb0
++	 */
++	{
++	    const char *pollname = ctl->server.pollname;
++	    if (pollname &&
++	        (strstr(pollname, "163.com") ||
++	         strstr(pollname, "126.com") ||
++	         strstr(pollname, "yeah.net"))) {
++	        char id_cmd[512];
++	        int id_len;
++	        id_len = snprintf(id_cmd, sizeof(id_cmd),
++	            "%s ID (\"name\" \"fetchmail\" "
++	                    "\"version\" \"" VERSION "\" "
++	                    "\"vendor\" \"OpenWRT\")\r\n",
++	            tag);
++	        if (id_len > 0 && id_len < (int)sizeof(id_cmd)) {
++	            if (SockWrite(sock, id_cmd, id_len) >= 0) {
++	                if (outlevel >= O_MONITOR)
++	                    report(stdout, "IMAP> %s", id_cmd);
++	                /* Read and drop the server's response to ID */
++	                (void)imap_ok(sock, NULL);
++	            }
++	        }
++	    }
++	}
++
+ 	ok = gen_transact(sock, 
+ 			  check_only ? "EXAMINE \"%s\"" : "SELECT \"%s\"",
+ 			  folder ? folder : "INBOX");
