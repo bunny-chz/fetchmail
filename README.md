@@ -106,7 +106,7 @@ https://help.mail.163.com/faqDetail.do?code=d7a5dc8471cd0c0e8b4b8f4f8e49998b3741
 
 fetchmail在登录时，默认是没有添加该身份识别信息的。
 
-为了修复该问题，我对fetchmail做了patch。做法是在检测到时网易域邮箱时，
+为了修复该问题，我对fetchmail做了patch。做法是在检测到是网易域邮箱时，
 
 在登录时发送符合 RFC 2971 的 ID 扩展命令格式，示例
 
