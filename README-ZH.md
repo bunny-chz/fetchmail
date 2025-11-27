@@ -3,7 +3,7 @@
 
 ## 🌐 语言版本
 
-- **中文文档** 📖 [README-ZH.md](README-ZH.md)
+- **中文文档** 📖 [README.md](README.md)
 - **English Documentation** 📖 [README-EN.md](README-EN.md)
 
 ---
