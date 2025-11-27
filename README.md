@@ -41,9 +41,9 @@ qq: fetching error. aborted
 
 ```
 fetchmail/
-├── 📄 LICENSE
 ├── 🔧 Makefile
 ├── 📖 README.md
+├── 📖 README-EN.md
 ├── 📂 files/
 │   ├── 🐚 fetchmail_deliver.sh
 │   ├── ⚙️ fetchmailrc
