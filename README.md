@@ -157,7 +157,7 @@ maddr -a from /tmp/maildir/extract/ 2>/dev/null | sed -n '2p'
 mhdr -h subject /tmp/maildir/extract/ 2>/dev/null
 mhdr -h subject /tmp/maildir/extract/
 
-# 提取中文Body (text/plain)
+# 提取正文Body (text/plain)
 mshow -O /tmp/maildir/extract/ 2
 ```
 
